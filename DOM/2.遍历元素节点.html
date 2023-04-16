@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>
+      <!-- 注释节点 -->
+      <a class="ali"></a>
+      <p></p>
+      <h1>
+        <p></p>
+      </h1>
+    </li>
+  </ul>
+  <script>
+    /** 
+     * 1.元素节点               1
+     * 2.属性节点               2
+     * 3.文本节点 text          3
+     * 4.注释节点 commiy        8
+     * 5.document              9
+     * 6.DocumenFragmentt      11
+    */
+    let li = document.getElementsByTagName('li')[0]
+    console.log(li.childNodes)
+
+    // nextSibling   previousSibling 下一个兄弟节点 上一个兄弟节点
+    console.log(li.previousSibling)
+    console.log(li.nextSibling)
+
+    function getChild(li, res) {
+
+      let children = li.childNodes
+      if (children.length > 0) {
+        children.forEach(child => {
+          if (child.nodeType === 1) {
+            res.push(child)
+          }
+          getChild(child, res)
+        })
+      }
+      return res 
+    }
+    console.log(getChild(li, []))
+  </script>
+</body>
+</html>
