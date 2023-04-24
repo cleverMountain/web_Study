@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .d1 {
+      height: 400px;
+      width: 1200px;
+      border: 1px solid black;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+  <button id="btn">滚动400</button>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <script>
+    // 查看混动条距离:上： 页面顶端的距离离浏览器视口的距离，与右边滚动条无关
+    /**
+     * 常规：window.pageXOffset/pageYOffset
+     * IE8/IE9及以下：
+     *  document.body.scrollLeft/scrollTop
+     *  document.documentElement.scrollLeft/scrollTop
+     * 
+     * 不常见：
+     *  window.scrollX/scrollY
+     * 
+     * 
+     * 
+    */
+    const btn = document.querySelector('#btn')
+    btn.onclick = function () {
+      // 滚动400距离
+      window.scrollTo(10, 400)
+    }
+
+    // 兼容写法获取滑动区域
+    function getScrollOffset() {
+      if (window.pageXOffset) {
+        return {
+          x: window.pageXOffset,
+          y: window.pageYOffset
+        }
+      } else {
+        return {
+          x: document.body.scrollLeft + document.documentElement.scrollLeft, // document.body.scrollLeft/scrollTop与document.documentElement.scrollLeft/scrollTop只有一个存在
+          y: document.body.scrollTop + document.documentElement.scrollTop
+        }
+      }
+    }
+
+  
+    
+  </script>
+</body>
+
+</html>

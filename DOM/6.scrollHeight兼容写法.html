@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 3000px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="d1"></div>
+  <script>
+    /**
+     * document.body.scrollWidth = window.innerWidth + window.sorollLeft
+     * 视口加上滚动条，所有宽度
+     * 1.document.body.scrollWidth
+     * 2.document.documentElement.scrollWidth
+    */
+
+    function getScrollSize () {
+      if (document.body.scrollWidth) {
+        return {
+          width: document.body.scrollWidth,
+          height: document.body.scrollHeight
+        }
+      } else {
+        return {
+          width: document.documentElement.scrollWidth,
+          height: document.documentElement.scrollHeight
+        }
+      }
+    }
+  </script>
+</body>
+</html>

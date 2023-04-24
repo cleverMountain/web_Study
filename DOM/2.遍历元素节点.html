@@ -27,14 +27,14 @@
      * 6.DocumenFragmentt      11
     */
     let li = document.getElementsByTagName('li')[0]
-    console.log(li.childNodes)
+    console.log(li.childNodes) // 只有元素节点
 
     // nextSibling   previousSibling 下一个兄弟节点 上一个兄弟节点
     console.log(li.previousSibling)
     console.log(li.nextSibling)
 
-    function getChild(li, res) {
-
+    function getChild(li, arr) {
+      let res = arr || []
       let children = li.childNodes
       if (children.length > 0) {
         children.forEach(child => {
@@ -46,7 +46,7 @@
       }
       return res 
     }
-    console.log(getChild(li, []))
+    console.log(getChild(li))
   </script>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 1.存在<!DOCTYPE html>，w3c标准模式
+     * 2.不存在 怪异模式
+     * 3.执行 document.compatMode(compat)兼容
+     *   CSS1Compat: w3c标准模式 
+     *   BackCompat: 怪异模式(向后兼容，一般兼容5个版本)
+    */
+
+
+    /**
+     * 1.视口
+     * 常规：window.innerWidth/innerHeight
+     * IE9/IE8及以下：
+     * 标准：document.documentElement.clientWidth/clientHeight
+     * 怪异：document.body.clientWidth/clientHeight
+    */
+    function getViewPortSize() {
+      if (window.innerWidth) {
+        return {
+          width: window.innerWidth,
+          innerHeight: window.innerHeight
+        }
+      } else {
+        if (document.compatMode === 'BackCompat') {
+          return {
+            width: document.body.clientWidth,
+            height: document.body.clientHeight
+          }
+        } else {
+          return {
+            width: document.documentElement.clientWidth,
+            height: document.documentElement.clientHeight
+          }
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
