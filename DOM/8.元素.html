@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 100px;
+      height: 100px;
+      padding: 20px;
+      border: 2px solid red;
+    }
+    .d2 {
+      width: 2000px;
+      height: 29px;
+    }
+  </style>
+</head>
+<body>
+  <div class="d1"></div>
+  <div class="d2"></div>
+  <script>
+    const d1 = document.getElementsByClassName('d1')[0]
+    console.log(d1.clientWidth, d1.clientWidth)
+    const d2 = document.getElementsByClassName('d2')[0]
+  </script>
+</body>
+</html>
