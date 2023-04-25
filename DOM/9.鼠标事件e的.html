@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 200px;
+      height: 100px;
+      border: 1px solid red;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+    }
+    .d2 {
+      width: 200px;
+      height: 1000px;
+    }
+  </style>
+</head>
+<body>
+  <div class="d1"></div>
+  <div class="d2"></div>
+  <script>
+    const d1 = document.getElementsByClassName('d1')[0]
+    d1.addEventListener('click', (e) => {
+      // 鼠标相对于可视窗口的绝对距离，与滚动条无关
+      console.log(e.clientX, e.clientY)
+      // 鼠标距离页面左端的距离与滚动条有关： 距视口的距离 + 滚动条  innerWidth + scrollLeft
+      console.log(e.pageX, e.pageY)
+      // 距离源目标(d1)
+      console.log(e.offsetX, e.offsetY)
+      // 距离显示器
+      console.log(e.screenX, e.screenY)
+    })
+  </script>
+</body>
+</html>

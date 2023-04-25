@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 100px;
+      height: 100px;
+      background: black;
+      cursor: pointer;
+      margin: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+  <script>
+    ; ((document, el) => {
+      class Event {
+        constructor(el) {
+          this.el = document.querySelector(el)
+          this.isMove = false
+          this.init()
+        }
+        init() {
+          this.bindEvent()
+        }
+        bindEvent() {
+          this.el.addEventListener('mousedown', this.handleMousedown.bind(this), false)
+          this.el.addEventListener('mousemove', this.handleMousemove.bind(this), false)
+          this.el.addEventListener('mouseup', this.handleMouseup.bind(this), false)
+        }
+        handleMousedown(e) {
+          this.left = e.target.offsetLeft
+          this.top = e.target.offsetTop
+         
+          this.x = e.clientX
+          this.y = e.clientY
+          this.offsetX = this.x - this.left
+          this.offsetY = this.y - this.top
+          this.isMove = true
+        }
+        handleMousemove(e) {
+          if (!this.isMove) return
+          console.log(e.clientX - this.offsetX)
+          let left = e.clientX - this.offsetX
+          let top = e.clientY - this.offsetY
+        
+          // console.log(e)
+          e.target.style.position = 'absolute'
+          e.target.style.top = (e.clientX - this.x) + 'px'
+          e.target.style.left = (e.clientY - this.y) + 'px'
+        }
+        handleMouseup() {
+          this.isMove = false
+
+        }
+      }
+      let d = new Event(el)
+      console.log(d)
+    })(document, '.d1');
+  </script>
+</body>
+
+</html>
