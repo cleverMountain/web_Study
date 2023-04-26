@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body,
+    .d1 {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: 0;
+    }
+
+    .d1 {
+      position: relative;
+    }
+
+    .btn {
+      margin: 20px;
+      cursor: pointer;
+    }
+
+    #pause {
+      position: fixed;
+      bottom: 100px;
+      right: 100px;
+      background: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1" id="d1">
+    <button class="btn">返回</button>
+    <div>
+
+      2.4.6.与其他系统软件接口
+      [BiIOM_SRS_0204060]
+      BiIOM将其监测的所有设备的健康状态（有报警、无报警）周期性地发送给南瑞的智能运维系统。
+      BiIOM上被监测设备的健康状态发生变化后，BiIOM主动推送变化的状态信息给南瑞的智能运维系统。
+      [Source]OR001232
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204061]
+      BiIOM将其监测的所有设备的报警信息通过KAFKA实时发送给一苇数智平台。BiIOM推送给一苇数智平台的报警信息与BiIOM推送给自身前台的报警信息的内容相同。
+      一苇数智平台通过BiIOM的数据库获取BiIOM持久化的信息。
+      [Source]黄石有轨电车项目
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204062]
+      BiIOM将其监测的所有设备的报警信息和状态信息通过KAFKA实时发送给非线数联平台。
+      BiIOM将手动录入的运营指标信息通过KAFK实时发送给非线数联平台，运营指标包括：15分钟及以上延误事件数，15分钟及以上延误率、清客事件数、百万车公里清客事件数EPMK、救援事件数、百万车公里救援事件数RPMK、下线事件数、百万车公里下线事件数。
+      [Source]OR001653
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      3.功能需求
+      3.1.版本管理
+      3.1.1.部件可独立发布
+      列举BiIOM中可独立发布的部件包含前台软件（含回放软件）、后台软件。版本校验仅针对可替换部件未真正更换带来的版本不匹配问题，对于部件的版本的正确性，由各部件的生成者保障。
+      [BiIOM_SRS_0301010]
+      子系统内部版本校验应包括所有可独立发布、独立替换的部件，版本校验应确保所有可独立发布、独立替换的部件的版本符合系统整体需求，若版本配套关系不满足，则应故障导向安全。
+      各子系统在应用其他子系统的数据前应对接口版本(该版本信息，不仅包括数据格式和数据定义也包括对应的数据行为)以及解析接口所需的数据版本进行检查。若检查不通过，则应向用户报警，将该子系统的输入导向安全。
+      [Source][BiTRACON_SADS_Y_0101020]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.2.子系统大版本显示
+      [BiIOM_SRS_0301020]
+      BiIOM子系统对应的维护终端设备应能显示所有CC、ZC、CBI、ATS、DCS、BiIOM前台、BiIOM后台、大屏、移动APP的版本号，并区分给用户显示的版本号和调测用的版本号。
+      [Source][BiTRACON_SADS_Y_0702100]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.3.子系统小版本管理
+      [BiIOM_SRS_0301030]
+      可根据设备编号查询CC、ZC、CBI板卡的版本号，并能导出、打印查询结果。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.系统权限管理
+      [BiIOM_SRS_0302000]
+      系统权限管理的操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.2.1.用户名和密码管理
+      [BiIOM_SRS_0302010]
+      系统管理员可以查询所有其他用户除密码之外的信息，以及新增、删除其他用户，重置其他用户的密码。所有用户（包括普通用户）都可以修改自己的密码。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.2.角色管理
+      [BiIOM_SRS_0302020]
+      系统管理员可以查询BiIOM系统包含的角色类型，以及新增、修改、删除角色。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302021]
+      每一种角色都对应一定的维护信息的访问、控制权限。角色与访问控制权限之间的关系可以通过BiIOM的功能类型、BiIOM后台服务的部署站点等进行关联。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302022]
+      系统管理员是一种特殊的角色，具有所有权限。其他角色只能赋予普通用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.3.用户管理
+      [BiIOM_SRS_0302030]
+      系统管理员可以基于角色新增用户，新增的用户登陆密码为默认值。系统管理员可以查询、修改、删除BiIOM系统包含的用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.3.系统设置
+      [BiIOM_SRS_0303000]
+      系统设置操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.3.1.报警设置
+      报警阈值设置
+      [BiIOM_SRS_0303010]
+      BiIOM上根据接收到的模拟量信息生成报警时，生成报警的模拟量阈值可通过人机界面进行设置。
+      [Source] Design
+      [Safety]BI-NS
+      2.4.6.与其他系统软件接口
+      [BiIOM_SRS_0204060]
+      BiIOM将其监测的所有设备的健康状态（有报警、无报警）周期性地发送给南瑞的智能运维系统。
+      BiIOM上被监测设备的健康状态发生变化后，BiIOM主动推送变化的状态信息给南瑞的智能运维系统。
+      [Source]OR001232
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204061]
+      BiIOM将其监测的所有设备的报警信息通过KAFKA实时发送给一苇数智平台。BiIOM推送给一苇数智平台的报警信息与BiIOM推送给自身前台的报警信息的内容相同。
+      一苇数智平台通过BiIOM的数据库获取BiIOM持久化的信息。
+      [Source]黄石有轨电车项目
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204062]
+      BiIOM将其监测的所有设备的报警信息和状态信息通过KAFKA实时发送给非线数联平台。
+      BiIOM将手动录入的运营指标信息通过KAFK实时发送给非线数联平台，运营指标包括：15分钟及以上延误事件数，15分钟及以上延误率、清客事件数、百万车公里清客事件数EPMK、救援事件数、百万车公里救援事件数RPMK、下线事件数、百万车公里下线事件数。
+      [Source]OR001653
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      3.功能需求
+      3.1.版本管理
+      3.1.1.部件可独立发布
+      列举BiIOM中可独立发布的部件包含前台软件（含回放软件）、后台软件。版本校验仅针对可替换部件未真正更换带来的版本不匹配问题，对于部件的版本的正确性，由各部件的生成者保障。
+      [BiIOM_SRS_0301010]
+      子系统内部版本校验应包括所有可独立发布、独立替换的部件，版本校验应确保所有可独立发布、独立替换的部件的版本符合系统整体需求，若版本配套关系不满足，则应故障导向安全。
+      各子系统在应用其他子系统的数据前应对接口版本(该版本信息，不仅包括数据格式和数据定义也包括对应的数据行为)以及解析接口所需的数据版本进行检查。若检查不通过，则应向用户报警，将该子系统的输入导向安全。
+      [Source][BiTRACON_SADS_Y_0101020]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.2.子系统大版本显示
+      [BiIOM_SRS_0301020]
+      BiIOM子系统对应的维护终端设备应能显示所有CC、ZC、CBI、ATS、DCS、BiIOM前台、BiIOM后台、大屏、移动APP的版本号，并区分给用户显示的版本号和调测用的版本号。
+      [Source][BiTRACON_SADS_Y_0702100]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.3.子系统小版本管理
+      [BiIOM_SRS_0301030]
+      可根据设备编号查询CC、ZC、CBI板卡的版本号，并能导出、打印查询结果。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.系统权限管理
+      [BiIOM_SRS_0302000]
+      系统权限管理的操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.2.1.用户名和密码管理
+      [BiIOM_SRS_0302010]
+      系统管理员可以查询所有其他用户除密码之外的信息，以及新增、删除其他用户，重置其他用户的密码。所有用户（包括普通用户）都可以修改自己的密码。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.2.角色管理
+      [BiIOM_SRS_0302020]
+      系统管理员可以查询BiIOM系统包含的角色类型，以及新增、修改、删除角色。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302021]
+      每一种角色都对应一定的维护信息的访问、控制权限。角色与访问控制权限之间的关系可以通过BiIOM的功能类型、BiIOM后台服务的部署站点等进行关联。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302022]
+      系统管理员是一种特殊的角色，具有所有权限。其他角色只能赋予普通用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.3.用户管理
+      [BiIOM_SRS_0302030]
+      系统管理员可以基于角色新增用户，新增的用户登陆密码为默认值。系统管理员可以查询、修改、删除BiIOM系统包含的用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.3.系统设置
+      [BiIOM_SRS_0303000]
+      系统设置操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.3.1.报警设置
+      报警阈值设置
+      [BiIOM_SRS_0303010]
+      BiIOM上根据接收到的模拟量信息生成报警时，生成报警的模拟量阈值可通过人机界面进行设置。
+      [Source] Design
+      [Safety]BI-NS
+      2.4.6.与其他系统软件接口
+      [BiIOM_SRS_0204060]
+      BiIOM将其监测的所有设备的健康状态（有报警、无报警）周期性地发送给南瑞的智能运维系统。
+      BiIOM上被监测设备的健康状态发生变化后，BiIOM主动推送变化的状态信息给南瑞的智能运维系统。
+      [Source]OR001232
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204061]
+      BiIOM将其监测的所有设备的报警信息通过KAFKA实时发送给一苇数智平台。BiIOM推送给一苇数智平台的报警信息与BiIOM推送给自身前台的报警信息的内容相同。
+      一苇数智平台通过BiIOM的数据库获取BiIOM持久化的信息。
+      [Source]黄石有轨电车项目
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0204062]
+      BiIOM将其监测的所有设备的报警信息和状态信息通过KAFKA实时发送给非线数联平台。
+      BiIOM将手动录入的运营指标信息通过KAFK实时发送给非线数联平台，运营指标包括：15分钟及以上延误事件数，15分钟及以上延误率、清客事件数、百万车公里清客事件数EPMK、救援事件数、百万车公里救援事件数RPMK、下线事件数、百万车公里下线事件数。
+      [Source]OR001653
+      [Safety]NA
+      [Notes]NA
+      [End]
+
+      3.功能需求
+      3.1.版本管理
+      3.1.1.部件可独立发布
+      列举BiIOM中可独立发布的部件包含前台软件（含回放软件）、后台软件。版本校验仅针对可替换部件未真正更换带来的版本不匹配问题，对于部件的版本的正确性，由各部件的生成者保障。
+      [BiIOM_SRS_0301010]
+      子系统内部版本校验应包括所有可独立发布、独立替换的部件，版本校验应确保所有可独立发布、独立替换的部件的版本符合系统整体需求，若版本配套关系不满足，则应故障导向安全。
+      各子系统在应用其他子系统的数据前应对接口版本(该版本信息，不仅包括数据格式和数据定义也包括对应的数据行为)以及解析接口所需的数据版本进行检查。若检查不通过，则应向用户报警，将该子系统的输入导向安全。
+      [Source][BiTRACON_SADS_Y_0101020]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.2.子系统大版本显示
+      [BiIOM_SRS_0301020]
+      BiIOM子系统对应的维护终端设备应能显示所有CC、ZC、CBI、ATS、DCS、BiIOM前台、BiIOM后台、大屏、移动APP的版本号，并区分给用户显示的版本号和调测用的版本号。
+      [Source][BiTRACON_SADS_Y_0702100]
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.1.3.子系统小版本管理
+      [BiIOM_SRS_0301030]
+      可根据设备编号查询CC、ZC、CBI板卡的版本号，并能导出、打印查询结果。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.系统权限管理
+      [BiIOM_SRS_0302000]
+      系统权限管理的操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.2.1.用户名和密码管理
+      [BiIOM_SRS_0302010]
+      系统管理员可以查询所有其他用户除密码之外的信息，以及新增、删除其他用户，重置其他用户的密码。所有用户（包括普通用户）都可以修改自己的密码。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.2.角色管理
+      [BiIOM_SRS_0302020]
+      系统管理员可以查询BiIOM系统包含的角色类型，以及新增、修改、删除角色。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302021]
+      每一种角色都对应一定的维护信息的访问、控制权限。角色与访问控制权限之间的关系可以通过BiIOM的功能类型、BiIOM后台服务的部署站点等进行关联。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      [BiIOM_SRS_0302022]
+      系统管理员是一种特殊的角色，具有所有权限。其他角色只能赋予普通用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.2.3.用户管理
+      [BiIOM_SRS_0302030]
+      系统管理员可以基于角色新增用户，新增的用户登陆密码为默认值。系统管理员可以查询、修改、删除BiIOM系统包含的用户。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+
+      3.3.系统设置
+      [BiIOM_SRS_0303000]
+      系统设置操作记录在BiIOM操作记录列表中。
+      [Source]Design
+      [Safety]BI-NS
+      [Notes]NA
+      [End]
+      3.3.1.报警设置
+      报警阈值设置
+      [BiIOM_SRS_0303010]
+      BiIOM上根据接收到的模拟量信息生成报警时，生成报警的模拟量阈值可通过人机界面进行设置。
+      [Source] Design
+      [Safety]BI-NS
+    </div>
+    <button id="pause">开始</button>
+  </div>
+  <script>
+
+
+
+    console.log(d1)
+      ; (function (pause) {
+        class ScrollEvent {
+          constructor() {
+            this.tmer = null
+            this.isPause = true
+            this.pauseEl = document.getElementById('pause')
+            this.init()
+          }
+          init() {
+            this.pauseEl.addEventListener('click', this.handlePause.bind(this), false)
+            // this.startTimer()
+          }
+          startTimer() {
+            this.timer = setInterval(() => {
+              window.scrollBy(100, 100)
+              const pagHeight = document.body.scrollHeight
+              const scrollHeight = document.documentElement.clientHeight + document.documentElement.scrollTop
+              console.log(1)
+              if (pagHeight - 10 <  scrollHeight) {
+                this.timer = null
+              console.log(this)
+              }
+            }, 100)
+          }
+          handlePause() {
+            // if (!this.isPause) {
+            //   window.clearInterval(this.timer)
+            //   this.isPause = true
+            //   this.pauseEl.innerHTML = '暂停'
+            // } else {
+            //   this.startTimer()
+            //   this.isPause = false
+            //   this.pauseEl.innerHTML = '开始'
+            // }
+            if (this.pause) {
+              this.pauseEl.innerHTML = '暂停'
+              window.clearInterval(this.timer)
+              this.isPause = true
+            } else {
+       
+              this.startTimer()
+              this.pauseEl.innerHTML = '开始'
+              this.isPause = false
+            }
+
+          }
+        }
+        let scrollEvent = new ScrollEvent('pause')
+      })();
+  </script>
+</body>
+
+</html>

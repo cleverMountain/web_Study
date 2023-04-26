@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body,
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+
+    .title {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid red;
+      cursor: pointer;
+    }
+
+    #go-last,
+    #back-first {
+      margin: 20px;
+      cursor: pointer;
+    }
+    #iframe {
+      width: 100%;
+      height: 100%;
+      display: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #src-if {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display:block
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button id="go-last">去底部</button>
+    <button id="back-first">回到顶部</button>
+  </div>
+  <div id="iframe">
+    <iframe id="src-if" src="./12.iframe.html"></iframe>
+  </div>
+  <script>
+
+    const arr = [
+      {
+        name: '凡人修仙传',
+        id: 1,
+      },
+      {
+        name: '斗破苍穹',
+        id: 2,
+      },
+      {
+        name: '我当道士那些年',
+        id: 3,
+      },
+      {
+        name: '凡人修仙传1',
+        id: 4,
+      },
+      {
+        name: '斗破苍穹2',
+        id: 5,
+      },
+      {
+        name: '我当道士那些年3',
+        id: 6,
+      }
+    ]
+      ; (function (arr, root, last, first, iframe) {
+        function Event(arr, root, last, iframe) {
+          this.el = document.getElementById(root)
+          this.backTopEl = document.getElementById(last)
+          this.toLsatEl = document.getElementById(first)
+          this.iframe = document.getElementById(iframe)
+          this.data = arr
+        }
+        Event.prototype.init = function () {
+          this.addDataEl()
+          this.backTopEl.addEventListener('click', this.handleBackTop.bind(this), false)
+          this.toLsatEl.addEventListener('click', this.handleGoLast.bind(this), false)
+          this.el.addEventListener('click', this.proxyEvent.bind(this), false)
+        }
+        Event.prototype.addDataEl = function () {
+          this.data.forEach(item => {
+            let child = document.createElement('div')
+            child.setAttribute('class', 'title')
+            child.innerHTML = item.name
+            child.setAttribute('index', item.id)
+            this.el.insertBefore(child, this.backTopEl)
+          })
+        }
+        Event.prototype.handleBackTop = function () {
+          // window.scroll(0, 0)
+          window.scrollTo(0, 0)
+        }
+        Event.prototype.handleGoLast = function () {
+          // 没有考虑兼容写法
+          // 视口高度
+          const viewHeight = document.body.clientHeight
+          // 页面高度(滑动条 + 视口)
+          const pageHeight = document.body.scrollHeight
+          const moveHeight = pageHeight - viewHeight
+          window.scrollTo(0, moveHeight)
+        }
+        // 事件代理
+        Event.prototype.proxyEvent = function (e) {
+          const target = e.target.attributes['index']
+          if (!target) return
+          const id = target.value
+          this.handleDetail(id)
+        }
+        Event.prototype.handleDetail = function (id) {
+          // console.log(id)
+          // window.href('da')
+          this.el.setAttribute('style', 'display: none')
+          this.iframe.setAttribute('style', 'display: block')
+        }
+
+
+        let e = new Event(arr, root, last, iframe)
+        e.init()
+        console.log(e)
+      })(arr, 'app', 'back-first', 'go-last', 'iframe');
+  </script>
+</body>
+
+</html>
