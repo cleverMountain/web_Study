@@ -35,6 +35,7 @@
       margin: 20px;
       cursor: pointer;
     }
+
     #iframe {
       width: 100%;
       height: 100%;
@@ -43,6 +44,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     #src-if {
       width: 100%;
       height: 100%;
@@ -50,7 +52,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      display:block
+      display: block
     }
   </style>
 </head>
@@ -140,12 +142,15 @@
           this.el.setAttribute('style', 'display: none')
           this.iframe.setAttribute('style', 'display: block')
         }
+        Event.prototype.closeParentWindow = function () {
 
+        }
 
-        let e = new Event(arr, root, last, iframe)
-        e.init()
-        console.log(e)
+        window.el = new Event(arr, root, last, iframe)
+        window.el.init()
+
       })(arr, 'app', 'back-first', 'go-last', 'iframe');
+
   </script>
 </body>
 

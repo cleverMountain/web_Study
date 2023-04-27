@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      text-decoration: none;
+
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .dropdown {
+      width: 200px;
+      height: 50px;
+      background-color: #000;
+      position: relative;
+    }
+
+    .dropdown .main {
+      display: block;
+      height: 100%;
+      text-align: center;
+      line-height: 50px;
+      color: #fff;
+    }
+
+    .dropdown:hover .list {
+      display: block;
+    }
+
+    .dropdown::after {
+      content: '';
+      display: table;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+      width: 15px;
+      height: 15px;
+      background-image: url('./arrow-top.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    .dropdown:hover::after {
+      background-image: url('./arrow-down.png');
+    }
+
+    .dropdown .item {
+      height: 40px;
+      background-color: #333;
+    }
+
+    .dropdown .item :hover {
+      background-color: #000;
+    }
+
+    .dropdown .item a {
+      display: block;
+      background-color: #333;
+      color: #999;
+      text-align: center;
+      line-height: 40px;
+
+    }
+
+    .dropdown .list {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dropdown">
+    <a class="main">下拉菜单</a>
+    <ul class="list">
+      <li class="item"><a href="">第1个项目</a></li>
+      <li class="item"><a href="">第2个项目</a></li>
+      <li class="item"><a href="">第3个项目</a></li>
+      <li class="item"><a href="">第4个项目</a></li>
+      <li class="item"><a href="">第5个项目</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>

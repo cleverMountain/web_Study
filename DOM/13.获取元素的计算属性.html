@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 100px;
+      height: 100px;
+      background-color: yellow;
+    }
+    .d1::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 30px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="d1">
+    
+  </div>
+  <script>
+    const d1 = document.getElementsByClassName('d1')[0]
+    console.log(window.getComputedStyle(d1, null)['height']) // 查看计算样式 ie8及以下不支持
+
+    console.log(window.getComputedStyle(d1, 'after')['height']) // 获取伪元素
+    parseInt('20px') == 20
+    // 兼容写法
+    function getStyles (elem, prop) {
+      if (window.getComputedStyle) {
+        if (prop) {
+          return window.getComputedStyle(elem, null)[prop]
+        } else {
+          return window.getComputedStyle(elem, null)
+        }
+      } else {
+        if (prop) {
+          return elem.currentStyle[prop]
+        } else {
+          return elem.currentStyle
+        }
+      }
+    }
+  </script>
+</body>
+</html>

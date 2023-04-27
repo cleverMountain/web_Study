@@ -39,7 +39,7 @@
 
 <body>
   <div class="d1" id="d1">
-    <button class="btn">返回</button>
+    <button class="btn" id="back">返回</button>
     <div>
 
       2.4.6.与其他系统软件接口
@@ -383,55 +383,53 @@
 
 
     console.log(d1)
-      ; (function (pause) {
+      ; (function (pause, back) {
         class ScrollEvent {
-          constructor() {
+          constructor(pause, back) {
             this.tmer = null
             this.isPause = true
-            this.pauseEl = document.getElementById('pause')
+            this.pauseEl = document.getElementById(pause)
+            this.backEl = document.getElementById(back)
             this.init()
           }
           init() {
             this.pauseEl.addEventListener('click', this.handlePause.bind(this), false)
-            // this.startTimer()
+            this.backEl.addEventListener('click', this.handleBack.bind(this), false)
           }
           startTimer() {
-            this.timer = setInterval(() => {
+            const _this = this
+            _this.timer = setInterval(() => {
               window.scrollBy(100, 100)
               const pagHeight = document.body.scrollHeight
               const scrollHeight = document.documentElement.clientHeight + document.documentElement.scrollTop
-              console.log(1)
-              if (pagHeight - 10 <  scrollHeight) {
-                this.timer = null
-              console.log(this)
+              if (pagHeight - 10 < scrollHeight) {
+                _this.clearTimer()
+                _this.pauseEl.innerHTML = '开始'
               }
             }, 100)
           }
           handlePause() {
-            // if (!this.isPause) {
-            //   window.clearInterval(this.timer)
-            //   this.isPause = true
-            //   this.pauseEl.innerHTML = '暂停'
-            // } else {
-            //   this.startTimer()
-            //   this.isPause = false
-            //   this.pauseEl.innerHTML = '开始'
-            // }
-            if (this.pause) {
-              this.pauseEl.innerHTML = '暂停'
-              window.clearInterval(this.timer)
-              this.isPause = true
-            } else {
-       
+            if (this.isPause) {
               this.startTimer()
-              this.pauseEl.innerHTML = '开始'
               this.isPause = false
+              this.pauseEl.innerHTML = '暂停'
+            } else {
+              this.clearTimer()
+              this.isPause = true
+              this.pauseEl.innerHTML = '开始'
             }
-
+          }
+          clearTimer () {
+            window.clearInterval(this.timer)
+          }
+          handleBack () {
+            console.log(window.parent)
+            // 调用父亲
+            window.parent.el.closeParentWindow()
           }
         }
-        let scrollEvent = new ScrollEvent('pause')
-      })();
+        let scrollEvent = new ScrollEvent(pause, back)
+      })('pause', 'back');
   </script>
 </body>
 
