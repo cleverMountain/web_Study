@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      text-decoration: none;
+
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .dropdown {
+      width: 200px;
+      height: 50px;
+      background-color: #000;
+      position: relative;
+    }
+
+    .dropdown .main {
+      display: block;
+      height: 100%;
+      text-align: center;
+      line-height: 50px;
+      color: #fff;
+    }
+
+    /* .dropdown:hover .list {
+      display: block;
+    } */
+
+    .up::after {
+      content: '';
+      display: table;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+      width: 15px;
+      height: 15px;
+      background-image: url('./arrow-top.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    /* .dropdown:hover::after {
+      background-image: url('./arrow-down.png');
+    } */
+    .down::after {
+      content: '';
+      display: table;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+      width: 15px;
+      height: 15px;
+      background-image: url('./arrow-down.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    .dropdown .item {
+      height: 40px;
+      background-color: #333;
+    }
+
+    .dropdown .item :hover {
+      background-color: #000;
+    }
+
+    .dropdown .item a {
+      display: block;
+      background-color: #333;
+      color: #999;
+      text-align: center;
+      line-height: 40px;
+
+    }
+
+    .dropdown .list {
+      /* display: none; */
+      height: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dropdown">
+    <a class="main">下拉菜单</a>
+    <ul class="list">
+      <li class="item"><a href="">第1个项目</a></li>
+      <li class="item"><a href="">第2个项目</a></li>
+      <li class="item"><a href="">第3个项目</a></li>
+      <li class="item"><a href="">第4个项目</a></li>
+      <li class="item"><a href="">第5个项目</a></li>
+    </ul>
+  </div>
+  <script>
+    ; (function (el) {
+      function getEleChildnNodes(node) {
+
+        const temp = {
+          length: '',
+          push: Array.prototype.push,
+          splice: Array.prototype.splice
+        }
+        // childNodes所有节点  children元素节点
+        const children = node.children,
+          len = children.length
+        console.log(children)
+        for (let i = 0; i < len; i++) {
+          const item = children[i]
+          if (item.nodeType === 1) {
+            temp.push(item)
+          }
+        }
+
+        return temp
+      }
+      class Select {
+        constructor(el) {
+          this.dropDown = document.getElementsByClassName('dropdown')[0]
+          // this.list = getEleChildnNodes(this.dropDown.children[1])
+          this.list = this.dropDown.children[1]
+          this.timer1 = null
+          this.timer2 = null
+          this.speed = 20
+          this.init()
+        }
+        init() {
+          this.dropDown.addEventListener('mouseenter', this.handleMouseEnter.bind(this), false)
+          this.dropDown.addEventListener('mouseleave', this.handleMouseLeave.bind(this), false)
+        }
+        handleMouseEnter() {
+
+          this.timer1 = setInterval(() => {
+
+            let height = parseInt(getComputedStyle(this.list, null)['height'])
+            height += this.speed
+            console.log(height)
+            this.list.style.height = height + 'px'
+            if (height >= 200) {
+              clearInterval(this.timer1)
+            }
+          }, 10)
+          clearInterval(this.timer2)
+          this.dropDown.className = 'dropdown up'
+        }
+        handleMouseLeave() {
+          this.timer2 = setInterval(() => {
+            let height = parseInt(getComputedStyle(this.list, null)['height'])
+            height -= this.speed
+            console.log(height)
+            this.list.style.height = height + 'px'
+            if (height <= 0) {
+              clearInterval(this.timer2)
+            }
+          }, 10)
+
+          clearInterval(this.timer1)
+          this.dropDown.className = 'dropdown down'
+        }
+      }
+      const select = new Select(el)
+      console.log(select)
+    })('dropdown');
+
+
+  </script>
+</body>
+
+</html>
