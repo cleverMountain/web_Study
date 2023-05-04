@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">点击</button>
+  <ul id="ul">
+    <li class="li">1</li>
+    <li class="li">2</li>
+    <li class="li">3</li>
+    <li class="li">4</li>
+    <li class="li">5</li>
+  </ul>
+  <script>
+    const oBtn = document.getElementById('btn')
+    function addEvent(el, type, fn) {
+      if (el.addEventListener) {
+        el.addEventListener(type, fn, false)
+      } else if (el.attachEvent) {
+        // ie8及以下
+        el.attachEvent('on' + type, function () {
+          // attachEvent this指向window
+          fn.call(el)
+        })
+      } else {
+        // 更低
+        el['on' + type] = fn
+      }
+    }
+    addEvent(oBtn, 'click', function () {
+      console.log(this)
+    })
+
+
+    const lis = document.getElementsByClassName('li')
+    let length = lis.length,
+      item
+    for (var i = 0; i < length; i++) {
+      // 立即执行函数
+      (function (i) {
+        item = lis[i]
+        addEvent(item, 'click', function () {
+          console.log(i)
+        })
+      })(i)
+    }
+  </script>
+</body>
+
+</html>
