@@ -6,6 +6,27 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .mm {
+      background-color: red;
+    }
+
+    .go {
+      background-color: #fff;
+    }
+
+    #d1 {
+      width: 200px;
+      height: 200px;
+      background: red;
+    }
+
+    #d2 {
+      width: 100px;
+      height: 100px;
+      background: black;
+    }
+  </style>
 </head>
 
 <body>
@@ -17,6 +38,10 @@
     <li class="li">4</li>
     <li class="li">5</li>
   </ul>
+  <button id="mm" class="mm">领取优惠</button>
+  <div id="d1">
+    <div id="d2"></div>
+  </div>
   <script>
     const oBtn = document.getElementById('btn')
     function addEvent(el, type, fn) {
@@ -49,6 +74,80 @@
           console.log(i)
         })
       })(i)
+    }
+
+
+    /**
+     * 解除事件函数
+     * 1.el.onclick = null
+     * 2.removeEventListener
+    */
+
+    const btn = document.getElementById('mm')
+    btn.addEventListener('click', go, false)
+    function go() {
+      console.log(1)
+      this.innerHTML = '已领取'
+      this.className = 'go'
+      btn.removeEventListener('click', go, false)
+    }
+
+    // 使用arguements.callee，非严格模式
+    btn.addEventListener('click', function () {
+      this.innerHTML = '已领取'
+      this.className = 'go'
+      btn.removeEventListener('click', arguments.callee, false)
+    }, false)
+
+    // 不使用匿名函数
+    btn.addEventListener('click', function go() {
+      console.log(1)
+      this.innerHTML = '已领取'
+      this.className = 'go'
+      btn.removeEventListener('click', go, false)
+    }, false)
+
+
+
+
+
+    /**
+     * 子向父            父向子
+     * 事件冒泡：false  事件捕获： true addEventListener
+     * 先捕获  后冒泡
+    */
+    /**
+     * 阻止冒泡: e.stopPropagetion()
+    */
+    const d1 = document.getElementById('d1')
+    const d2 = document.getElementById('d2')
+    d1.addEventListener('click', function (e) {
+
+      console.log('d1')
+    }, false)
+    d2.addEventListener('click', function (e) {
+
+      // 阻止事件冒泡
+      cancelBubble(e)
+      console.log('d2')
+    }, false)
+    // d1.addEventListener('click', function () {
+    //   console.log('d1,捕获')
+    // }, true)
+    // d2.addEventListener('click', function () {
+    //   console.log('d2，捕获')
+    // }, true)
+
+    /**
+     * 冒泡事件兼容写法
+    */
+    function cancelBubble(e) {
+      e = e || window.event
+      if (e.stopPropagation) {
+        e.stopPropagation()
+      } else {
+        e.cancelBubble = true
+      }
     }
   </script>
 </body>
