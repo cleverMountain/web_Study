@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      left: 400px;
+      top: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+
+  <script>
+    function getStyles(elem, prop) {
+      if (window.getComputedStyle) {
+        if (prop) {
+          return window.getComputedStyle(elem, null)[prop]
+        } else {
+          return window.getComputedStyle(elem, null)
+        }
+      } else {
+        if (prop) {
+          return elem.currentStyle[prop]
+        } else {
+          return elem.currentStyle
+        }
+      }
+    }
+    function getScrollOffset() {
+      if (window.pageXOffset) {
+        return {
+          left: window.pageXOffset,
+          top: window.pageYOffset
+        }
+      } else {
+        return {
+          left: document.body.scrollLeft + document.documentElement.scrollLeft, // document.body.scrollLeft/scrollTop与document.documentElement.scrollLeft/scrollTop只有一个存在
+          top: document.body.scrollTop + document.documentElement.scrollTop
+        }
+      }
+    }
+    function pagePos(e) {
+      const { left, top } = getScrollOffset()
+      const cLeft = document.documentElement.clientLeft || 0
+      const cTop = document.documentElement.clientTop || 0
+     
+      return {
+        x: e.clientX + left - cLeft,
+        y: e.clientY + top - cTop
+      }
+    }
+    const d1 = document.getElementsByClassName('d1')[0]
+    
+    d1.onmousedown = function (e) {
+      let ev = e || window.event
+      let x1 = pagePos(ev).x - parseInt(getStyles(d1, 'left'))
+      let y1 = pagePos(ev).y - parseInt( getStyles(d1, 'top'))
+
+      document.onmousemove = function (e) {
+        e = e || window.event
+        const { x, y } = pagePos(e)
+
+        d1.style.left = (x - x1) + 'px'
+        d1.style.top = (y - y1) + 'px'
+      }
+      d1.onmouseup = function (e) {
+
+      }
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .d1 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      left: 400px;
+      top: 400px;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="d1"></div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <script>
     /**
      * layerX/layerY(有兼容问题，IE11下不同) 同pageX/pageY
      * pageX/pageY ie9以下不支持
      * offsetX/offsetY 包括边框 safari不包括边框
     */
+
+
+    // 封装pageX与pageY 可是区域 + 滚动距离 + 偏移值（margin）
+    const d1 = document.getElementsByClassName('d1')[0]
+    document.onclick = function (e) {
+      console.log(pagePos(e).y, e.pageY)
+    }
+    function getScrollOffset() {
+      if (window.pageXOffset) {
+        return {
+          left: window.pageXOffset,
+          top: window.pageYOffset
+        }
+      } else {
+        return {
+          left: document.body.scrollLeft + document.documentElement.scrollLeft, // document.body.scrollLeft/scrollTop与document.documentElement.scrollLeft/scrollTop只有一个存在
+          top: document.body.scrollTop + document.documentElement.scrollTop
+        }
+      }
+    }
+    // 获取pageX，pageY
+    function pagePos(e) {
+      const { left, top } = getScrollOffset()
+      const cLeft = document.documentElement.clientLeft || 0
+      const cTop = document.documentElement.clientTop || 0
+      return {
+        x: e.clientX + left - cLeft,
+        y: e.clientY + top - cTop
+      }
+    }
   </script>
 </body>
+
 </html>
