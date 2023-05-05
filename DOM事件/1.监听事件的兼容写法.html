@@ -114,7 +114,7 @@
     /**
      * 子向父            父向子
      * 事件冒泡：false  事件捕获： true addEventListener
-     * 先捕获  后冒泡
+     * 先捕获  后冒泡 处于事件本身先后顺序决定
     */
     /**
      * 阻止冒泡: e.stopPropagetion()
@@ -122,21 +122,23 @@
     const d1 = document.getElementById('d1')
     const d2 = document.getElementById('d2')
     d1.addEventListener('click', function (e) {
-
-      console.log('d1')
+      /*
+      e.target || e.scrElement
+      */
+      console.log('d1,冒泡')
     }, false)
     d2.addEventListener('click', function (e) {
 
       // 阻止事件冒泡
-      cancelBubble(e)
-      console.log('d2')
+      // cancelBubble(e)
+      console.log('d2,目标,冒泡')
     }, false)
-    // d1.addEventListener('click', function () {
-    //   console.log('d1,捕获')
-    // }, true)
-    // d2.addEventListener('click', function () {
-    //   console.log('d2，捕获')
-    // }, true)
+    d1.addEventListener('click', function () {
+      console.log('d1,捕获')
+    }, true)
+    d2.addEventListener('click', function () {
+      console.log('d2,目标,捕获')
+    }, true)
 
     /**
      * 冒泡事件兼容写法
@@ -149,6 +151,17 @@
         e.cancelBubble = true
       }
     }
+
+    /**
+     * 阻止默认事件 
+     * return false
+     * e.preventDefault IE9以下不兼容
+    */
+   document.oncontextmenu = function (e) {
+     console.log(1)
+    //  return false
+     e.preventDefault()
+   }
   </script>
 </body>
 
