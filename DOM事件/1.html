@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>拖拽效果及边界判定</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 300px;
+      height: 300px;
+      background-color: lightblue;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+</body>
+<script type="text/javascript">
+  var div = document.querySelector('div');
+  var key = 0;//设置一个开关变量
+  var x;
+  var y;
+  div.onmousedown = function (evt)//鼠标按下时事件
+  {
+    key = 1;//开关打开
+    var e = evt || window.event;
+    x = e.clientX - div.offsetLeft;//鼠标点击的位置距元素边界的距离,用来固定鼠标与元素的相对位置不变
+    y = e.clientY - div.offsetTop;
+  }
+  div.onmouseup = function ()//鼠标松开时事件
+  {
+    key = 0;//开关关闭
+  }
+  document.onmousemove = function (evt) {
+    var e = evt || window.event;
+    if (key == 1) {
+      var left = e.clientX - x;//鼠标移动时物体边界距离屏幕边界的距离
+      var top = e.clientY - y;
+    }
+    if (left <= 0)//左右边界限定
+    {
+      left = 0;
+    }
+    else if (left >= getInner().w - div.offsetWidth)//元素在最右边时的判定，屏幕的宽度减去元素自身的宽度
+    {
+      left = getInner().w - div.offsetWidth;
+    }
+    if (top <= 0)//上下边界限定
+    {
+      top = 0;
+    }
+    else if (top >= getInner().h - div.offsetHeight)//元素在最下边时的判定，屏幕的高度减去元素自身的高度
+    {
+      top = getInner().h - div.offsetHeight;
+    }
+    div.style.left = left + 'px';
+    div.style.top = top + 'px';
+  }
+  //得到浏览器页面内容区窗口的大小
+  function getInner() {
+    if (typeof innerHeight == 'undefined') {
+      return {
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight
+      }//IE浏览器适用
+    }
+    else {
+      return {
+        w: innerWidth,
+        h: innerHeight
+      }//非IE浏览器适用
+    }
+  }
+</script>
+
+</html>

@@ -40,9 +40,9 @@
      * offsetLeft: 与父级元素距离(父元素是否有定位元素),如果没有一直找到body
     */
     let son = document.getElementsByClassName('s')[0]
-    son.offsetParent // 有定位的父级元素
+    // 有定位的父级元素
 
-
+console.log(son.offsetLeft)
     // 获取到视口的坐标
     function getOffsetSize(el) {
       let offsetLeft = el.offsetLeft,
@@ -58,6 +58,7 @@
         height: offsetTop
       }
     }
+    console.log(getOffsetSize(son))
   </script>
 </body>
 

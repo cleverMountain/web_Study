@@ -14,7 +14,7 @@
 
     .d1 {
       height: 400px;
-      width: 1200px;
+      width:1990px;
       border: 1px solid black;
 
     }
@@ -43,6 +43,7 @@
     btn.onclick = function () {
       // 滚动400距离
       window.scrollTo(10, 400)
+      console.log(getScrollOffset().x, getScrollOffset().y) 
     }
 
     // 兼容写法获取滑动区域
@@ -59,8 +60,8 @@
         }
       }
     }
-
-  
+    console.log(getScrollOffset().x, getScrollOffset().y) 
+console.log(document.body.scrollWidth, document.documentElement.clientWidth, document.documentElement.offsetWidth)
     
   </script>
 </body>
