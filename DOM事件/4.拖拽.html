@@ -15,12 +15,22 @@
       left: 400px;
       top: 400px;
     }
+
+    .d2 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: black;
+      display: none;
+      left: 400px;
+      top: 400px;
+    }
   </style>
 </head>
 
 <body>
   <div class="d1"></div>
-
+  <div class="d2"></div>
   <script>
     function getViewPortSize() {
       if (window.innerWidth) {
@@ -81,40 +91,66 @@
       }
     }
     const d1 = document.getElementsByClassName('d1')[0]
+    const d2 = document.getElementsByClassName('d2')[0]
     let index = 1
     d1.onmousedown = function (e) {
+      d2.style.display = 'none'
       let ev = e || window.event
+      ev.preventDefault()
+      const buttonType = e.button
       let x1 = pagePos(ev).x - parseInt(getStyles(d1, 'left'))
       let y1 = pagePos(ev).y - parseInt(getStyles(d1, 'top'))
 
       const { width, height } = getViewPortSize()
       const d1Width = getStyles(d1, 'width')
       const d1Height = getStyles(d1, 'height')
+      const d2Width = getStyles(d2, 'width')
+      const d2Height = getStyles(d2, 'height')
       console.log(d1Width, d1Height)
       console.log(width, height)
-      document.onmousemove = function (e) {
-        e = e || window.event
-        const { x, y } = pagePos(e)
-        let finalX = x - x1
-        let finalY = y - y1
-        if (finalX <= 0) {
-          finalX = 0
-        }
-        if (finalY <= 0) {
-          finalY = 0
-        }
-        if (finalY > height - d1Height) {
-          finalY = (height - d1Height) + 'px'
-        }
-        if (finalX > width - d1Width) {
-          finalX = (width - d1Width) + 'px'
-        }
-        console.log(finalY)
+      if (buttonType == 0) {
+        d2.style.display = 'none'
+        document.onmousemove = function (e) {
+          e = e || window.event
+          const { x, y } = pagePos(e)
+          let finalX = x - x1
+          let finalY = y - y1
+          if (finalX <= 0) {
+            finalX = 0
+          }
+          if (finalY <= 0) {
+            finalY = 0
+          }
+          if (finalY > height - d1Height) {
+            finalY = (height - d1Height) + 'px'
+          }
+          if (finalX > width - d1Width) {
+            finalX = (width - d1Width) + 'px'
+          }
+          console.log(finalY)
 
-        d1.style.left = finalX + 'px'
-        d1.style.top = finalY + 'px'
+          d1.style.left = finalX + 'px'
+          d1.style.top = finalY + 'px'
+        }
+      } else if (buttonType == 2) {
+        e.preventDefault()
+        const { x, y } = pagePos(e)
+        // 边界问题
+        let d2Left = pagePos(e).x
+            d2Top = pagePos(e).y
+        if (d2Width + x >= width) {
+          d2Left = d2Left - d2Width
+        }
+        if (d2Height + y >= height) {
+          d2Top = d2Top - d2Height
+        }
+        d2.style.left = d2Left + 'px'
+        d2.style.top = d2Top + 'px'
+        d2.style.display = 'block'
+
       }
       document.onmouseup = function (e) {
+     
         document.onmousemove = null
       }
     }
