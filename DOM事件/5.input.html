@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input {
+      outline: none;
+      color: gray;
+      border: 1px solid #ccc;
+    }
+    input:focus {
+      border: 1px solid blue;
+      box-shadow: 0 0 5px blue;
+    }
+    input.has-value {
+      color: #424242;
+    }
+  </style>
+</head>
+
+<body>
+  <input 
+  onfocus="if(this.value === '请输入关键字') {
+    this.value = '';
+    this.className = 'has-value';
+  }"
+  onblur=" if (this.value === '') {
+    this.value = '请输入关键字';
+    this.className = '';
+  }"
+  value="请输入关键字">
+  <script>
+    // const input = document.getElementsByClassName('in')[0]
+    // input.onfocus = function () {
+    //   if (this.value === '请输入关键字') {
+    //     this.value = ''
+    //     this.className = 'has-value'
+    //   }
+
+    // }
+    // input.onblur = function () {
+    //   if (this.value === '') {
+    //     this.value = '请输入关键字'
+    //     this.className = ''
+    //   }
+    // }
+  </script>
+</body>
+
+</html>
