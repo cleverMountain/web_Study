@@ -1,0 +1,38 @@
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.wrap {
+  display: flex;
+
+  padding: 20px;
+}
+.wrap .ul-parent {
+
+  background: #424242;
+  color: #fff;
+}
+.wrap .ul-parent .parent {
+  height: 40px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrap .ul-parent .parent.active {
+  background: blue;
+}
+.wrap .ul-son {
+  width: 300px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrap .ul-son .son {
+  display: none;
+}
+.wrap .ul-son .son.active {
+  display: block;
+}
