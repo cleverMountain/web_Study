@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .item {
+      margin-top: 20px;
+    }
+
+    .item .kind {
+      font-size: 16px;
+    }
+
+    .item .skill {
+      font-size: 12px;
+      margin-left: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <div class="item">
+      <div class="kind">
+        法师
+      </div>
+      <div class="skill">
+        吐水
+      </div>
+    </div> -->
+  </div>
+  <script>
+    const data = [
+      {
+        name: '法师',
+        skill: '吐水'
+      },
+      {
+        name: '老师',
+        skill: '教书'
+      },
+      {
+        name: '学生',
+        skill: '学习'
+      }
+    ]
+    const root = document.getElementById('app')
+      ; (function (opt) {
+        function TplEvent(opt) {
+          const { data, root } = opt
+          this.data = data
+          this.root = root
+          this.list = ''
+
+        }
+        TplEvent.prototype.init = function () {
+          data.forEach(item => {
+            const { name, skill } = item
+            this.list += this.createTpl(name, skill)
+          })
+          this.root.innerHTML = this.list
+        }
+        TplEvent.prototype.createTpl = function (kind, skill) {
+          const tpl = `
+            <div class="item">
+              <div class="kind">
+                ${kind}
+              </div>
+              <div class="skill">
+                ${skill}
+              </div>
+            </div>
+          `
+          return tpl
+        }
+        let tplEvent = new TplEvent(opt)
+        tplEvent.init()
+      }({ data, root }));
+  </script>
+</body>
+
+</html>

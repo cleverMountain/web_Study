@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <person>
+    <user>张三</user>
+  </person>
+  <script>
+    // JSON -> JavaScript Object Notation
+    const obj = {
+      a: 1,
+      b: 2,
+      d: function () {
+        console.log(this.a + this.b)
+      }
+    }
+    // JSON是一个对象，会自动将函数去掉，轻量，数据交互
+    console.log(JSON.parse(JSON.stringify(obj)))
+
+    /**
+     * 所有编程语言离不开的三大数据类型
+     * scaler 标量 -> 字符串和数字
+     * sequence 序列 -> 数组和列表 list array
+     * mapping 映射 -> 键值对  json就是一种映射(object)
+    */
+
+    /**
+     * 早期使用xml进行交互，文档大，不易读
+     * xml：可以自定义标签
+     * html:  h5标准
+     * 
+    */
+   /**
+    *  前后端是由字符串为交互的，response
+    *  知识经过了浏览器的处理才变成了对象或数组  preview  JSON.parse
+   */
+  </script>
+</body>
+
+</html>
