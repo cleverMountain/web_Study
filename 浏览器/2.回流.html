@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>我是盒子</div>
+  <script>
+    const boxStyle = document.getElementsByTagName('div')[0].style
+    //  回流 + 重绘
+    boxStyle.width = '100px'
+    //  回流 + 重绘
+    boxStyle.height = '100px'
+    //  回流 + 重绘
+    boxStyle.border = '1px solid red'
+    //   重绘
+    boxStyle.background = 'yellow'
+    //  回流 + 重绘
+    boxStyle.fontSize = '12px'
+
+    // 浏览器有优化机制
+  </script>
+</body>
+
+</html>
