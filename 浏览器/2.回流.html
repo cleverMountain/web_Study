@@ -23,7 +23,31 @@
     //  回流 + 重绘
     boxStyle.fontSize = '12px'
 
-    // 浏览器有优化机制
+    // 浏览器具有优化机制
+
+    // 添加类
+
+
+    // 2.使用textCss
+    const box = document.getElementsByTagName('div')[0]
+    box.onmouseover = function () {
+      /**
+       *   this.style.cssText = `
+        width: 10px;
+        height: 10px;
+        background: red
+        `
+      */
+
+      // 先使用display：none  再使用display:block
+      boxStyle.display = 'none'
+      boxStyle.width = '100px'
+      boxStyle.height = '100px'
+      boxStyle.border = '1px solid red'
+      boxStyle.background = 'yellow'
+      boxStyle.fontSize = '12px'
+      boxStyle.display = 'block'
+    }
   </script>
 </body>
 

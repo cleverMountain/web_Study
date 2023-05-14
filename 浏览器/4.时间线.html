@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <script>
+    // script标签也是dom节点，生成domtree时候执行，所以添加到了后面
+    document.write(1) 
+
+    // css树与dom树结合产生rendertree并且渲染完毕后再执行，所以清空再添加
+    window.onload = function () {
+      document.write(2) 
+    }
+
+
+    /**
+     * 时间线：在浏览器加载页面开始的那一刻到页面加载完全结束的这个过程中，按顺序发生的每一件事情的总流程
+     * 
+     * 1.创建document对象 -> JS起作用了   DOM
+     * 2.解析文档，构建dom树
+     * 3.link 开启新线程 -> 异步加载css外部文件      style -> cssOM
+    */
+  </script>
+</body>
+</html>
