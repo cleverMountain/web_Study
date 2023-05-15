@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,15 +14,16 @@
     }
   </style>
 </head>
+
 <body>
   <div></div>
   <script>
     // script标签也是dom节点，生成domtree时候执行，所以添加到了后面
-    document.write(1) 
+    document.write(1)
 
     // css树与dom树结合产生rendertree并且渲染完毕后再执行，所以清空再添加
     window.onload = function () {
-      document.write(2) 
+      document.write(2)
     }
 
 
@@ -30,8 +32,34 @@
      * 
      * 1.创建document对象 -> JS起作用了   DOM
      * 2.解析文档，构建dom树
-     * 3.link 开启新线程 -> 异步加载css外部文件      style -> cssOM
+     *    document.readyState = 'loading'  加载中
+     * 3.link 开启新线程 -> 异步加载css外部文件         style -> cssOM
+     * 4.遇到script(没有设置异步),阻塞文档解析，等待js脚本执行完成，继续解析文档。
+     * 5.异步加载script(async)，不阻塞文档解析(不可以使用document.write)  ，可能阻塞可能不阻塞
+     * 6.解析文档遇到img 先解析节点， src=""，创建加载线程，异步加载图片资源，不阻塞解析文档
+     * 7.解析完成
+     *     document.readyState = 'interactive'  解析完成
+     * 8.文档解析完成后，defer  script脚本开始执行  异步加载最后解析，不阻塞
+     * 9.文档解析完成： DOMContentLoaded
+     * 10.async  script加载并执行完毕，img等资源加载完毕，window对象中的onload事件才触发
+     *     document.readyState = 'complete'  加载完成
     */
+
+
+    // 普通script 阻塞文档解析    async 异步加载，加载完毕后立即解析，可能阻塞可能不阻塞     defer 异步加载，最后解析，不阻塞
+
+
+    console.log(document.readyState)
+
+
+    document.onreadystatechange = function () {
+      console.log(document.readyState)
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log('DOMContentLoaded')
+    })
   </script>
 </body>
+
 </html>
