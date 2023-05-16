@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="text/javascript"></script>
+  <!-- <script src="./1.js"></script> -->
+  <!-- <script src="./1.js" defer="defer"></script> -->
+  <!-- <script src="./1.js" async="async"></script> -->
+</head>
+  <!-- defer异步加载，等dom树创建完毕，最后解析执行 -->
+  <!-- async异步加载，加载完毕立即解析执行 -->
+  <!-- 普通，同步加载同步解析，会阻塞浏览器后续解析页面，所有一般把普通script放在最后 -->
+<body>
+  <div id="d1">1</div>
+
+  <!-- 异步加载 -->
+  <script type="text/javascript">
+    (function () {
+      function asyncLoad () {
+        const s = document.createElement('script'),
+          oS = document.getElementsByTagName('script')[0]
+        s.type = "text/javascript"
+        s.src = "./1.js"
+        oS.parentNode.insertBefore(s, oS)
+      }
+      if (window.attachEvent) {
+        window.attachEvent('onload', asyncLoad)
+      } else {
+        // window.addEventListener('load', asyncLoad)
+        window.addEventListener('DOMContentLoaded', asyncLoad)
+      }
+    })();
+  </script>
+</body>
+
+</html>
