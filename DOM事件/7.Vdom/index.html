@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="d1" data="1" style="color: red; font-size: 12px;" id="d">
+    321
+    <div>
+      <p class="p1" style="color: black">312</p>
+    </div>
+    <h1>h1</h1>
+  </div>
+
+  <script>
+    // 获取虚拟dom
+    const d1 = document.getElementById('d')
+    function getVdom(el) {
+      if (!el) return
+      const o = {}
+      if (el.nodeType === 1) {
+        const tagName = el.tagName.toLowerCase(),
+          nodeType = el.nodeType,
+          attrs = el.attributes,
+          vdAttrs = {}
+        let children = []
+        // 清空白text
+        for (let i = 0; i < el.childNodes.length; i++) {
+          const item = el.childNodes[i]
+          if (item.nodeType == 1) {
+            children.push(item)
+          } else {
+            item && item.data.trim() && children.push(item)
+          }
+        }
+        for (let i = 0; i < attrs.length; i++) {
+          const attr = attrs[i].nodeName + '=' + attrs[i].nodeValue,
+            attrKey = attr.split('=')[0],
+            attrValue = attr.split('=')[1]
+          if (attrKey === 'style') {
+            const styleValue = attrValue.split(';'),
+              styleAttr = {}
+            for (let k = 0; k < styleValue.length; k++) {
+              let [skey, sValue] = styleValue[k].split(':')
+              styleAttr[skey.trim()] = skey.trim() && sValue.trim()
+            }
+            vdAttrs['style'] = styleAttr
+          } else {
+            vdAttrs[attrKey] = attrValue
+          }
+        }
+        o['tagName'] = tagName
+        o['attrs'] = vdAttrs
+        o['text'] = null
+        o['children'] = []
+        for (let i = 0; i < children.length; i++) {
+          o['children'].push(getVdom(children[i]))
+        }
+      } else {
+        o['tagName'] = null
+        o['attrs'] = null
+        o['text'] = el.data.trim()
+        o['children'] = null
+      }
+      return o
+    }
+
+
+    const vDom = getVdom(d1)
+
+    // 虚拟dom转化为真实dom
+    function createDom(vnode) {
+      if (!vnode) return
+      const { attrs, children, tagName, text } = vnode
+      const fragMent = document.createDocumentFragment()
+      let root
+      root = tagName && document.createElement(tagName)
+      for (let key in attrs) {
+        const attrValue = attrs[key]
+        if (key !== 'style') {
+          root.setAttribute(key, attrValue)
+        } else {
+          let styleStr = ''
+          for (let k in attrValue) {
+            const value = attrValue[k]
+            styleStr += k && `${k}: ${value};`
+          }
+          root.style = styleStr.slice(0, -1)
+        }
+      }
+      if (text) {
+        root = document.createTextNode(text)
+      }
+      children && children.forEach(child => {
+        root.appendChild(createDom(child))
+      })
+      return root
+    }
+    console.log(createDom(vDom))
+    let dom = createDom(vDom)
+    // 虚拟dom转化成真实节点
+
+    document.body.appendChild(dom)
+    /**
+     * {
+     *  tag: 'div',
+     *  attrs: {
+     *    className: 'd1',
+     *    id: 'd',
+     *    style: {
+     *      width: '100px'
+     *    }
+     *   },
+     *  children: [
+     *    {
+     *      tag: 'h1',
+     *      text: null,
+     *      children: [
+     *        tag: null,
+     *        attrs: [],
+     *        text: 'h1'
+     *      ]
+     *    }
+     *  ]
+     * }
+    */
+  </script>
+</body>
+
+</html>
